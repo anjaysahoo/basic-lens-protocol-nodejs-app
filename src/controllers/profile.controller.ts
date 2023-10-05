@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import baseClient from "../utils/lens-protocol/baseClient";
+import baseClientUtil from "../utils/lens-protocol/base-client.util";
 import getDefaultProfile from "../graphql/getDefaultProfile";
 import dotenv from 'dotenv';
 dotenv.config();
@@ -19,7 +19,7 @@ export const getHandle = async (
 ) => {
     const address = process.env.APP_ADDRESS as string;
 
-    const response = await baseClient.query(getDefaultProfile,
+    const response = await baseClientUtil.query(getDefaultProfile,
         { address }).toPromise();
 
     res.status(200).json({

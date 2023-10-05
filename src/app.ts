@@ -1,7 +1,5 @@
 import express, {Request, Response, NextFunction} from "express";
 import bodyParser from "body-parser";
-// import dotenv from 'dotenv';
-// dotenv.config();
 
 import profileRoutes from "./routes/profile.route";
 

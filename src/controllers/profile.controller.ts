@@ -25,5 +25,5 @@ export const getHandle = async (
 
   res.status(200).json({
     handle: response.data.defaultProfile
-  });
-};
+  })
+}

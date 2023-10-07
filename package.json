@@ -8,6 +8,7 @@
     "build": "tsc -p . -w",
     "start": "nodemon dist/app.js",
     "prettier-format": "prettier --config .prettierrc . --write",
+    "prettier-watch": "onchange . -- prettier --write {{changed}}",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix"
   },
@@ -27,6 +28,7 @@
     "@typescript-eslint/parser": "^6.7.4",
     "eslint": "^8.50.0",
     "nodemon": "^3.0.1",
+    "onchange": "^7.1.0",
     "prettier": "^3.0.3"
   }
 }

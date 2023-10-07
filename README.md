@@ -77,3 +77,7 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
 1. `npm run build` to build your code
 2. `npm run start` to start your server
 3. `npm run prettier-watch` to format your code automatically
+
+## Improvements(TODO)
+
+1. Add more customizable rules in `.eslintrc` & `.prettierrc`

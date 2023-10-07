@@ -17,11 +17,11 @@ export const getHandle = async (
   res: Response,
   _next: NextFunction
 ) => {
-  const address = process.env.APP_ADDRESS as string;
+  const address = process.env.APP_ADDRESS as string
 
   const response = await baseClientUtil
     .query(getDefaultProfile, { address })
-    .toPromise();
+    .toPromise()
 
   res.status(200).json({
     handle: response.data.defaultProfile

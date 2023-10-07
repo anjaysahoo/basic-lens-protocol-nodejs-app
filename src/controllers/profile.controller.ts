@@ -9,13 +9,13 @@ dotenv.config();
  *
  * @param req - The request object.
  * @param res - The response object.
- * @param next - The next function.
+ * @param _next - The next function.
  * @returns The handle object.
  */
 export const getHandle = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   const address = process.env.APP_ADDRESS as string;
 

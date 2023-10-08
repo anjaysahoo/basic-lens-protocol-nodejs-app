@@ -9,18 +9,24 @@ First setup basic typescript nodejs application using [basic-ts-express-app](htt
 
 ### Things that will be covered in this guide are
 
-1. Creating a [simple GET REST API](#simple-get-rest-api) for fetching data from Lens Protocol
-2. [Setting up Prettier with ESLint](#setup-prettier-with-eslint)
-3. [Setting up Husky](#setting-up-husky)
-4. Creating a simple POST REST API for fetching data from Lens Protocol
+1. Creating a **simple GET REST API** for fetching data from Lens Protocol
+2. **Setting up Prettier with ESLint**
+3. **Setting up Husky**
+4. Creating a **simple POST REST API** for fetching data from Lens Protocol
 
-## Simple GET REST API
+
+<details>
+ <summary style="font-size: x-large; font-weight: bold">Simple GET REST API</summary>
 
 Creating a`Base Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of fetching related stuff from Lens Protocol.
 
 <b>Note: </b> Rationale behind using `URQL` client can be understood from this article [5 GraphQL clients for JavaScript and Node.js](https://blog.logrocket.com/5-graphql-clients-for-javascript-and-node-js/#:~:text=GraphQL-based%20servers%20can%20only,a%20GraphQL%20client%20is%20needed.)
+</details>
 
-## Setup Prettier with ESLint
+
+
+<details>
+ <summary style="font-size: x-large; font-weight: bold">Setup Prettier with ESLint</summary>
 
 ### Step-1:
 
@@ -72,8 +78,11 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   res.status(404).json({ message: err.message });
 });
 ```
+</details>
 
-## Setting Up Husky
+<details>
+ <summary style="font-size: x-large; font-weight: bold">Setting Up Husky</summary>
+
 Husky to prevent bad git commits and enforce code standards in your project.
 
 To understand more about husky, refer to this article 👉 [Enforcing Coding Conventions with Husky Pre-commit Hooks](https://khalilstemmler.com/blogs/tooling/enforcing-husky-precommit-hooks/)
@@ -81,22 +90,29 @@ To understand more about husky, refer to this article 👉 [Enforcing Coding Con
 <b>Note: </b>Above article setup is old so follow below steps to set up husky
 
 ### Step-1
+
 ```sh
 npx husky-init && npm install
 ```
+
 **Note:** Above command may not work in powershell, so try running it in cmd or git bash
 
 ### Step-2
+
 ```sh
 npx husky set .husky/pre-commit "npm run prettier-format && npm run lint"
 ```
+
 This adds script in `.husky\pre-commit`, which will ensure your code is formatted and linted before committing
 
 After this when ever anyone will try to commit then husky will run script `npm run prettier-format && npm run lint`
 
 ### Below are things to expect after this:-
+
 1. If any file contains prettier then those will be fixed, and **you need to commit that fixed code again**.
 2. Issue related to linting will be reported, and **you need fix then only you can commit the code**
+
+</details>
 
 ## Things to trigger before coding anytime
 

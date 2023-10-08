@@ -7,7 +7,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   res.status(404).json({ message: err.message });
 });
 

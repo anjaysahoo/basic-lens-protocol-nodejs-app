@@ -15,7 +15,7 @@ First setup basic typescript nodejs application using [basic-ts-express-app](htt
 4. Creating a **simple POST REST API** for fetching data from Lens Protocol
 
 <details>
- <summary style="font-size: x-large; font-weight: bold">Simple GET REST API</summary>
+ <summary style="font-size: xx-large; font-weight: bold">Simple GET REST API</summary>
 
 Creating a`Base Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of fetching related stuff from Lens Protocol.
 
@@ -24,7 +24,7 @@ Creating a`Base Client` using [URQL](https://formidable.com/open-source/urql/doc
 </details>
 
 <details>
- <summary style="font-size: x-large; font-weight: bold">Setup Prettier with ESLint</summary>
+ <summary style="font-size: xx-large; font-weight: bold">Setup Prettier with ESLint</summary>
 
 ### Step-1:
 
@@ -80,7 +80,7 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
 </details>
 
 <details>
- <summary style="font-size: x-large; font-weight: bold">Setting Up Husky</summary>
+ <summary style="font-size: xx-large; font-weight: bold">Setting Up Husky</summary>
 
 Husky to prevent bad git commits and enforce code standards in your project.
 

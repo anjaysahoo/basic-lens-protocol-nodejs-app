@@ -106,6 +106,10 @@ This adds script in `.husky\pre-commit`, which will ensure your code is formatte
 
 After this when ever anyone will try to commit then husky will run script `npm run prettier-format && npm run lint`
 
+Referred resources
+1. https://www.youtube.com/watch?v=ZXW6Jn6or1w
+2. https://typicode.github.io/husky/getting-started.html
+
 ### Below are things to expect after this:-
 
 1. If any file contains prettier then those will be fixed, and **you need to commit that fixed code again**.

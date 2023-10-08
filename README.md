@@ -7,7 +7,7 @@ for fetching/mutating data on Lens Protocol, also setup your own REST API using 
 
 First setup basic typescript nodejs application using [basic-ts-express-app](https://github.com/anjaysahoo/basic-ts-express-app) repo
 
-### Things that will be covered in this guide are
+## Things that will be covered in this guide are
 
 1. Creating a **simple GET REST API** for fetching data from Lens Protocol
 2. **Setting up Prettier with ESLint**

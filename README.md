@@ -14,16 +14,14 @@ First setup basic typescript nodejs application using [basic-ts-express-app](htt
 3. **Setting up Husky**
 4. Creating a **simple POST REST API** for fetching data from Lens Protocol
 
-
 <details>
  <summary style="font-size: x-large; font-weight: bold">Simple GET REST API</summary>
 
 Creating a`Base Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of fetching related stuff from Lens Protocol.
 
 <b>Note: </b> Rationale behind using `URQL` client can be understood from this article [5 GraphQL clients for JavaScript and Node.js](https://blog.logrocket.com/5-graphql-clients-for-javascript-and-node-js/#:~:text=GraphQL-based%20servers%20can%20only,a%20GraphQL%20client%20is%20needed.)
+
 </details>
-
-
 
 <details>
  <summary style="font-size: x-large; font-weight: bold">Setup Prettier with ESLint</summary>
@@ -78,6 +76,7 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   res.status(404).json({ message: err.message });
 });
 ```
+
 </details>
 
 <details>

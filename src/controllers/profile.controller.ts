@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import baseClientUtil from '../utils/lens-protocol/base-client.util';
-import getDefaultProfile from '../graphql/getDefaultProfile';
-import dotenv from 'dotenv';
+import { Request, Response, NextFunction } from "express";
+import baseClientUtil from "../utils/lens-protocol/base-client.util";
+import getDefaultProfile from "../graphql/getDefaultProfile";
+import dotenv from "dotenv";
 dotenv.config();
 
 /**
@@ -21,7 +21,7 @@ export const getHandle = async (
 
   const response = await baseClientUtil
     .query(getDefaultProfile, { address })
-    .toPromise();
+    .toPromise()  ;
 
   res.status(200).json({
     handle: response.data.defaultProfile

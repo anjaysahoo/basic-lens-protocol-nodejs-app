@@ -8,7 +8,7 @@
     "build": "tsc -p . -w",
     "start": "nodemon dist/app.js",
     "prettier-format": "prettier --config .prettierrc . --write",
-    "prettier-watch": "onchange . -- prettier --write {{changed}}",
+    "prettier-watch": "onchange . -- prettier --write",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
     "prepare": "husky install"

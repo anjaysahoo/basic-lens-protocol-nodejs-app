@@ -11,7 +11,8 @@ First setup basic typescript nodejs application using [basic-ts-express-app](htt
 
 1. Creating a [simple GET REST API](#simple-get-rest-api) for fetching data from Lens Protocol
 2. [Setting up Prettier with ESLint](#setup-prettier-with-eslint)
-3. Creating a simple POST REST API for fetching data from Lens Protocol
+3. [Setting up Husky](#setting-up-husky)
+4. Creating a simple POST REST API for fetching data from Lens Protocol
 
 ## Simple GET REST API
 
@@ -71,6 +72,31 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   res.status(404).json({ message: err.message });
 });
 ```
+
+## Setting Up Husky
+Husky to prevent bad git commits and enforce code standards in your project.
+
+To understand more about husky, refer to this article 👉 [Enforcing Coding Conventions with Husky Pre-commit Hooks](https://khalilstemmler.com/blogs/tooling/enforcing-husky-precommit-hooks/)
+
+<b>Note: </b>Above article setup is old so follow below steps to set up husky
+
+### Step-1
+```sh
+npx husky-init && npm install
+```
+**Note:** Above command may not work in powershell, so try running it in cmd or git bash
+
+### Step-2
+```sh
+npx husky set .husky/pre-commit "npm run prettier-format && npm run lint"
+```
+This adds script in `.husky\pre-commit`, which will ensure your code is formatted and linted before committing
+
+After this when ever anyone will try to commit then husky will run script `npm run prettier-format && npm run lint`
+
+### Below are things to expect after this:-
+1. If any file contains prettier then those will be fixed, and **you need to commit that fixed code again**.
+2. Issue related to linting will be reported, and **you need fix then only you can commit the code**
 
 ## Things to trigger before coding anytime
 

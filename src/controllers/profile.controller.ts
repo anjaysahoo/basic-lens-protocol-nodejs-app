@@ -21,9 +21,9 @@ export const getHandle = async (
 
   const response = await baseClientUtil
     .query(getDefaultProfile, { address })
-    .toPromise()
+    .toPromise();
 
   res.status(200).json({
     handle: response.data.defaultProfile
-  })
-}
+  });
+};

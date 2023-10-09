@@ -122,14 +122,17 @@ Referred resources
  <summary style="font-size: x-large; font-weight: bold">Setting Up Environment Variables</summary>
 
 ### Step-1
+
 ```shell
 npm install dotenv
 ```
 
 ### Step-2
+
 Create a `.env` file in the root of your project
 
 ### Step-3
+
 Create a `src\config\env.config.ts` file. We will use this file to get our environment variables.
 
 This help reduce code duplication.
@@ -141,6 +144,9 @@ dotenv.config();
 export const APP_ADDRESS = process.env.APP_ADDRESS as string;
 export const PRIVATE_KEY = process.env.PRIVATE_KEY as string;
 ```
+
+Refer this article 👉 [Node.js Everywhere with Environment Variables!](https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786) for better understanding
+
 </details>
 
 ## Things to trigger before coding anytime

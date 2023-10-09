@@ -1,4 +1,4 @@
-const getDefaultProfile = `
+const getDefaultProfileGraphql = `
 query DefaultProfile($address: EthereumAddress!) {
   defaultProfile(request: { ethereumAddress: $address}) {
     id
@@ -18,4 +18,4 @@ query DefaultProfile($address: EthereumAddress!) {
 }
 `;
 
-export default getDefaultProfile;
+export default getDefaultProfileGraphql;

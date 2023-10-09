@@ -120,9 +120,8 @@ Referred resources
 
 ## Things to trigger before coding anytime
 
-1. `npm run build` to build your code
-2. `npm run start` to start your server
-3. `npm run prettier-watch` to format your code automatically
+1. `npm run build` to build your code 2. `npm run start` to start your server
+2. `npm run prettier-watch` to format your code automatically
 
 ## Improvements(TODO)
 

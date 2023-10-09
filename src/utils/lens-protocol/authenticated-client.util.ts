@@ -18,7 +18,7 @@ const authenticatedClientUtil: () => Promise<Client> = async () => {
   try {
     // Query challenge info
     const challengeInfo = await baseClientUtil
-      .query(challengeGraphql, { "address": APP_ADDRESS })
+      .query(challengeGraphql, { address: APP_ADDRESS })
       .toPromise();
 
     // Initialize provider using AlchemyProvider and API key
@@ -38,14 +38,12 @@ const authenticatedClientUtil: () => Promise<Client> = async () => {
       })
       .toPromise();
 
-
     // Extract accessToken from authentication response
     const {
       data: {
         authenticate: { accessToken }
       }
     } = authData;
-
 
     // Create and return authenticated client
     return createClient({

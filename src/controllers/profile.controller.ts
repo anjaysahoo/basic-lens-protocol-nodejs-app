@@ -17,7 +17,7 @@ export const getHandle = async (
   _next: NextFunction
 ) => {
   const response = await baseClientUtil
-    .query(getDefaultProfileGraphql, { "address": APP_ADDRESS })
+    .query(getDefaultProfileGraphql, { address: APP_ADDRESS })
     .toPromise();
 
   res.status(200).json({

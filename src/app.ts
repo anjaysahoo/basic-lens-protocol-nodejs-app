@@ -13,6 +13,7 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
 });
 
 app.use("/profile", profileRoutes);
+
 app.use("/user-action", userActionRoute);
 
 app.listen(8080);

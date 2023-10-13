@@ -21,6 +21,6 @@ export const getHandle = async (
     .toPromise();
 
   res.status(200).json({
-    handle: response?.data?.defaultProfile
+    handle: response?.data?.defaultProfile.handle
   });
 };

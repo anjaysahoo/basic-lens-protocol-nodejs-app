@@ -12,14 +12,99 @@ First setup basic typescript nodejs application using [basic-ts-express-app](htt
 1. Creating a **simple GET REST API** for fetching data from Lens Protocol
 2. **Setting up Prettier with ESLint**
 3. **Setting up Husky**
-4. Creating a **simple POST REST API** for fetching data from Lens Protocol
+4. Creating a **simple POST/DELETE REST API** for mutating data from Lens Protocol
 
 <details>
  <summary style="font-size: x-large; font-weight: bold">Simple GET REST API</summary>
 
+In this simple example, we will fetch handle for hardcoded app address from Lens Protocol API
+
+### Step-1:
 Creating a`Base Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of fetching related stuff from Lens Protocol.
 
+Under `utils/lens-protocol` folder create a `base-client.ts` file
+
 <b>Note: </b> Rationale behind using `URQL` client can be understood from this article [5 GraphQL clients for JavaScript and Node.js](https://blog.logrocket.com/5-graphql-clients-for-javascript-and-node-js/#:~:text=GraphQL-based%20servers%20can%20only,a%20GraphQL%20client%20is%20needed.)
+
+### Step-2
+
+Create a `profile-route` route
+```typescript
+// app.ts
+app.use("/profile", profileRoutes);
+```
+
+```typescript
+// routes/profile.route.ts
+
+import { Request, Response, NextFunction } from "express";
+import baseClientUtil from "../utils/lens-protocol/base-client.util";
+import getDefaultProfileGraphql from "../graphql/get-default-profile.graphql";
+import { APP_ADDRESS } from "../config/env.config";
+
+/**
+ * Get the handle.
+ *
+ * @param req - The request object.
+ * @param res - The response object.
+ * @param _next - The next function.
+ * @returns The handle object.
+ */
+export const getHandle = async (
+  req: Request,
+  res: Response,
+  _next: NextFunction
+) => {
+  const response = await baseClientUtil
+    .query(getDefaultProfileGraphql, { address: APP_ADDRESS })
+    .toPromise();
+
+  res.status(200).json({
+    handle: response?.data?.defaultProfile.handle
+  });
+};
+
+```
+
+### Step-3
+
+Create `profile.controller.ts` file
+
+```typescript
+import { Request, Response, NextFunction } from "express";
+import baseClientUtil from "../utils/lens-protocol/base-client.util";
+import getDefaultProfileGraphql from "../graphql/get-default-profile.graphql";
+import { APP_ADDRESS } from "../config/env.config";
+
+/**
+ * Get the handle.
+ *
+ * @param req - The request object.
+ * @param res - The response object.
+ * @param _next - The next function.
+ * @returns The handle object.
+ */
+export const getHandle = async (
+  req: Request,
+  res: Response,
+  _next: NextFunction
+) => {
+  const response = await baseClientUtil
+    .query(getDefaultProfileGraphql, { address: APP_ADDRESS })
+    .toPromise();
+
+  res.status(200).json({
+    handle: response?.data?.defaultProfile.handle
+  });
+};
+
+```
+
+### Step-4
+Create models & utility function as per the requirement.
+
+### Testing API
+<img src="src/public/readme-assets/handle.png" width="500" alt="">
 
 </details>
 
@@ -149,10 +234,144 @@ Refer this article 👉 [Node.js Everywhere with Environment Variables!](https:/
 
 </details>
 
+<details>
+ <summary style="font-size: x-large; font-weight: bold">Simple POST/DELETE REST API</summary>
+
+In this simple example, we will be posting and deleting reaction for a post through 
+Lens Protocol GraphQL API
+
+### Step-1:
+Create a `Authenticated Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of mutation-related stuff from Lens Protocol.
+
+Under `utils/lens-protocol` folder create a `authenticated-client.util.ts` file.
+
+### Step-2
+Create a `user-action` route 
+
+```typescript
+// app.ts
+app.use("/user-action", userActionRoute);
+```
+
+```typescript
+// routes/user-action.ts
+
+import express from "express";
+
+import {
+  addReaction,
+  removeReaction
+} from "../controllers/user-action.controller";
+
+const router = express.Router();
+
+// POST /user-action/reaction
+router.post("/reaction", addReaction);
+
+// DELETE /user-action/reaction
+router.delete("/reaction", removeReaction);
+
+export default router;
+```
+
+### Step-3
+
+Create `user-action.controller.ts` file
+
+```typescript
+import { Request, Response, NextFunction } from "express";
+import { ReactionRequestBodyModel } from "../models/request-bodies/reaction.request-body.model";
+import {
+  addReactionToAPost,
+  removeReactionFromAPost
+} from "../utils/lens-protocol/update-reaction-for-post.util";
+
+/**
+ * Adds a reaction to a post.
+ *
+ * @param req - The request object containing the publication ID and reaction.
+ * @param res - The response object.
+ * @param _next - The next function.
+ */
+export const addReaction = async (
+  req: Request<unknown, unknown, ReactionRequestBodyModel>,
+  res: Response,
+  _next: NextFunction
+) => {
+  try {
+    // Call the function to add the reaction to the post
+    await addReactionToAPost(req.body.publicationId, req.body.reaction);
+
+    res.status(200).json({
+      message: "Reaction added successfully"
+    });
+  } catch (error) {
+    res.status(503).json({
+      message:
+        "Could not add reaction to publication id: " + req.body.publicationId
+    });
+  }
+};
+
+/**
+ * remove a reaction from a post.
+ *
+ * @param req - The request object containing the publication ID and reaction.
+ * @param res - The response object.
+ * @param _next - The next function.
+ */
+export const removeReaction = async (
+  req: Request<unknown, unknown, ReactionRequestBodyModel>,
+  res: Response,
+  _next: NextFunction
+) => {
+  try {
+    // Call the function to remove the reaction from a post
+    await removeReactionFromAPost(req.body.publicationId, req.body.reaction);
+
+    res.status(200).json({
+      message: "Reaction removed successfully"
+    });
+  } catch (error) {
+    res.status(503).json({
+      message:
+        "Could not remove reaction from publication id: " +
+        req.body.publicationId
+    });
+  }
+};
+
+```
+
+### Step-4
+Create models & utility function as per the requirement.
+
+
+### Testing API
+
+**POST**
+
+<img src="src/public/readme-assets/add-reaction.png" width="500" alt="">
+
+
+**DELETE**
+
+<img src="src/public/readme-assets/delete-reaction.png" width="500" alt="">
+
+
+
+### Referred Resource
+
+1. [ChatGPT Thread](https://chat.openai.com/share/6d227e08-d64c-43d8-8289-7016dd7f0bab) on API structuring.
+2. ![Design Effective & Safe API.jpeg](src/public/readme-assets/Design%20Effective%20%26%20Safe%20API.jpeg)
+3. ![HTTP Status Code.jpeg](src/public/readme-assets/HTTP%20Status%20Code.jpeg)
+</details>
+
 ## Things to trigger before coding anytime
 
-1. `npm run build` to build your code 2. `npm run start` to start your server
-2. `npm run prettier-watch` to format your code automatically
+1. `npm run build` to build your code 
+2. `npm run start` to start your server
+3. `npm run prettier-watch` to format your code automatically
 
 ## Improvements(TODO)
 

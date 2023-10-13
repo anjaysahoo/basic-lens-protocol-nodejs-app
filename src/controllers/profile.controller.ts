@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import baseClientUtil from "../utils/lens-protocol/base-client.util";
-import getDefaultProfileGraphql from "../graphql/getDefaultProfile.graphql";
+import getDefaultProfileGraphql from "../graphql/get-default-profile.graphql";
 import { APP_ADDRESS } from "../config/env.config";
 
 /**
@@ -21,6 +21,6 @@ export const getHandle = async (
     .toPromise();
 
   res.status(200).json({
-    handle: response?.data?.defaultProfile
+    handle: response?.data?.defaultProfile.handle
   });
 };

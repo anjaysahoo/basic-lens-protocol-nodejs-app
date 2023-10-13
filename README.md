@@ -20,6 +20,7 @@ First setup basic typescript nodejs application using [basic-ts-express-app](htt
 In this simple example, we will fetch handle for hardcoded app address from Lens Protocol API
 
 ### Step-1:
+
 Creating a`Base Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of fetching related stuff from Lens Protocol.
 
 Under `utils/lens-protocol` folder create a `base-client.ts` file
@@ -29,6 +30,7 @@ Under `utils/lens-protocol` folder create a `base-client.ts` file
 ### Step-2
 
 Create a `profile-route` route
+
 ```typescript
 // app.ts
 app.use("/profile", profileRoutes);
@@ -63,7 +65,6 @@ export const getHandle = async (
     handle: response?.data?.defaultProfile.handle
   });
 };
-
 ```
 
 ### Step-3
@@ -97,13 +98,14 @@ export const getHandle = async (
     handle: response?.data?.defaultProfile.handle
   });
 };
-
 ```
 
 ### Step-4
+
 Create models & utility function as per the requirement.
 
 ### Testing API
+
 <img src="src/public/readme-assets/handle.png" width="500" alt="">
 
 </details>
@@ -237,16 +239,18 @@ Refer this article 👉 [Node.js Everywhere with Environment Variables!](https:/
 <details>
  <summary style="font-size: x-large; font-weight: bold">Simple POST/DELETE REST API</summary>
 
-In this simple example, we will be posting and deleting reaction for a post through 
+In this simple example, we will be posting and deleting reaction for a post through
 Lens Protocol GraphQL API
 
 ### Step-1:
+
 Create a `Authenticated Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of mutation-related stuff from Lens Protocol.
 
 Under `utils/lens-protocol` folder create a `authenticated-client.util.ts` file.
 
 ### Step-2
-Create a `user-action` route 
+
+Create a `user-action` route
 
 ```typescript
 // app.ts
@@ -340,12 +344,11 @@ export const removeReaction = async (
     });
   }
 };
-
 ```
 
 ### Step-4
-Create models & utility function as per the requirement.
 
+Create models & utility function as per the requirement.
 
 ### Testing API
 
@@ -353,12 +356,9 @@ Create models & utility function as per the requirement.
 
 <img src="src/public/readme-assets/add-reaction.png" width="500" alt="">
 
-
 **DELETE**
 
 <img src="src/public/readme-assets/delete-reaction.png" width="500" alt="">
-
-
 
 ### Referred Resource
 
@@ -369,7 +369,7 @@ Create models & utility function as per the requirement.
 
 ## Things to trigger before coding anytime
 
-1. `npm run build` to build your code 
+1. `npm run build` to build your code
 2. `npm run start` to start your server
 3. `npm run prettier-watch` to format your code automatically
 

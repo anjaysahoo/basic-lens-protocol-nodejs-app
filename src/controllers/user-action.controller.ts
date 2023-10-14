@@ -46,7 +46,10 @@ export const removeReaction = async (
 ) => {
   try {
     // Call the function to remove the reaction from a post
-    await removeReactionFromAPostUtil(req.body.publicationId, req.body.reaction);
+    await removeReactionFromAPostUtil(
+      req.body.publicationId,
+      req.body.reaction
+    );
 
     res.status(200).json({
       message: "Reaction removed successfully"

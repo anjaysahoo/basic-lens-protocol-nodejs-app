@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { ReactionRequestBodyModel } from "../models/request-bodies/reaction.request-body.model";
 import {
-  addReactionToAPost,
-  removeReactionFromAPost
+  addReactionToAPostUtil,
+  removeReactionFromAPostUtil
 } from "../utils/lens-protocol/update-reaction-for-post.util";
 
 /**
@@ -19,7 +19,7 @@ export const addReaction = async (
 ) => {
   try {
     // Call the function to add the reaction to the post
-    await addReactionToAPost(req.body.publicationId, req.body.reaction);
+    await addReactionToAPostUtil(req.body.publicationId, req.body.reaction);
 
     res.status(200).json({
       message: "Reaction added successfully"
@@ -46,7 +46,7 @@ export const removeReaction = async (
 ) => {
   try {
     // Call the function to remove the reaction from a post
-    await removeReactionFromAPost(req.body.publicationId, req.body.reaction);
+    await removeReactionFromAPostUtil(req.body.publicationId, req.body.reaction);
 
     res.status(200).json({
       message: "Reaction removed successfully"

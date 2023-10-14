@@ -3,7 +3,7 @@ import addReactionGraphql from "../../graphql/add-reaction.graphql";
 import { PUBLIC_APP_LENS_ID } from "../../config/env.config";
 import authenticatedClientUtil from "./authenticated-client.util";
 
-export const addReactionToAPost = async (
+export const addReactionToAPostUtil = async (
   publicationId: string,
   reaction: string
 ) => {
@@ -22,7 +22,7 @@ export const addReactionToAPost = async (
   }
 };
 
-export const removeReactionFromAPost = async (
+export const removeReactionFromAPostUtil = async (
   publicationId: string,
   reaction: string
 ) => {

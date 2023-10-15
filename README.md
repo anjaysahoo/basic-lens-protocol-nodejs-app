@@ -203,6 +203,8 @@ Referred resources
 1. If any file contains prettier then those will be fixed, and **you need to commit that fixed code again**.
 2. Issue related to linting will be reported, and **you need fix then only you can commit the code**
 
+**Note:** For setting up Husky for project where are there are app/projects in sub-folders, follow this [StackOverflow thread](https://stackoverflow.com/questions/74129312/how-to-configure-husky-when-git-is-in-a-different-folder)
+
 </details>
 
 <details>

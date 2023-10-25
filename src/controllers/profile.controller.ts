@@ -21,7 +21,12 @@ export const getHandle = async (
     .toPromise();
 
   /** Since MediaSet is union, so we have to check the type */
-  const url = (response.data?.defaultProfile?.picture as { __typename: 'MediaSet'; original: { url: string } })?.original?.url;
+  const url = (
+    response.data?.defaultProfile?.picture as {
+      __typename: "MediaSet";
+      original: { url: string };
+    }
+  )?.original?.url;
 
   res.status(200).json({
     handle: url

@@ -1,21 +1,24 @@
-const getDefaultProfileGraphql = `
-query DefaultProfile($address: EthereumAddress!) {
-  defaultProfile(request: { ethereumAddress: $address}) {
-    id
-    name
-    isDefault
-    metadata
-    handle
-    picture {
-      ... on MediaSet {
-        original {
-          url
-        }
-      }
-    }
-    ownedBy
-  }
-}
-`;
+import { graphql } from '../gql';
 
-export default getDefaultProfileGraphql;
+const getDefaultProfileByAddressDocument = graphql(/* GraphQL */ `
+    query defaultProfile($address: EthereumAddress!) {
+        defaultProfile(request: { ethereumAddress: $address}) {
+            id
+            name
+            isDefault
+            metadata
+            handle
+            picture {
+                ... on MediaSet {
+                    original {
+                        url
+                    }
+                }
+            }
+            ownedBy
+        }
+    }
+`);
+export default getDefaultProfileByAddressDocument;
+
+

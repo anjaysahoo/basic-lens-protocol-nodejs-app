@@ -1,6 +1,6 @@
 import { graphql } from "../gql";
 
-const getDefaultProfileByAddressDocument = graphql(/* GraphQL */ `
+const getDefaultProfileByAddressQuery = graphql(/* GraphQL */ `
   query defaultProfile($address: EthereumAddress!) {
     defaultProfile(request: { ethereumAddress: $address }) {
       id
@@ -19,4 +19,5 @@ const getDefaultProfileByAddressDocument = graphql(/* GraphQL */ `
     }
   }
 `);
-export default getDefaultProfileByAddressDocument;
+
+export default getDefaultProfileByAddressQuery;

@@ -13,6 +13,7 @@ First setup basic typescript nodejs application using [basic-ts-express-app](htt
 2. **Setting up Prettier with ESLint**
 3. **Setting up Husky**
 4. Creating a **simple POST/DELETE REST API** for mutating data from Lens Protocol
+5. Setting Up Codegen for Lens GraphQL
 
 <details>
  <summary style="font-size: x-large; font-weight: bold">Simple GET REST API</summary>
@@ -367,6 +368,139 @@ Create models & utility function as per the requirement.
 1. [ChatGPT Thread](https://chat.openai.com/share/6d227e08-d64c-43d8-8289-7016dd7f0bab) on API structuring.
 2. ![Design Effective & Safe API.jpeg](src/public/readme-assets/Design%20Effective%20%26%20Safe%20API.jpeg)
 3. ![HTTP Status Code.jpeg](src/public/readme-assets/HTTP%20Status%20Code.jpeg)
+</details>
+
+<details>
+ <summary style="font-size: x-large; font-weight: bold">Setting Up Codegen for Lens GraphQL</summary>
+ Using codegen we will be able to make Lens Graphql responses type safe.
+
+### Step-1
+
+1. `npm i graphql`
+2. `npm i -D typescript @graphql-codegen/cli`
+3. `npm i -D @parcel/watcher` to watch your code changes and codegen automatically
+4. `npm i`
+
+### Step-2
+`codegen.ts` file
+```typescript
+import type { CodegenConfig } from "@graphql-codegen/cli";
+
+const config: CodegenConfig = {
+  schema: "https://api-mumbai.lens.dev/",
+  documents: ["src/graphql/*.ts"], //from where to pick queries & mutations
+  ignoreNoDocuments: true, // for better experience with the watcher
+  generates: {
+    "./src/gql/": { //where to put generated code
+      preset: "client",
+      plugins: []
+    }
+  }
+};
+
+export default config;
+```
+
+### Step-3
+Below is an example on how to use codegen
+
+1. In `src/graphql/get-default-profile-query.graphql.ts` file
+```typescript
+import { graphql } from "../gql";
+
+const getDefaultProfileByAddressQuery = graphql(/* GraphQL */ `
+  query defaultProfile($address: EthereumAddress!) {
+    defaultProfile(request: { ethereumAddress: $address }) {
+      id
+      name
+      isDefault
+      metadata
+      handle
+      picture {
+        ... on MediaSet {
+          original {
+            url
+          }
+        }
+      }
+      ownedBy
+    }
+  }
+`);
+
+export default getDefaultProfileByAddressQuery;
+```
+
+2. In `src/controllers/profile.controller.ts` file
+```typescript
+import { Request, Response, NextFunction } from "express";
+import baseClientUtil from "../utils/lens-protocol/base-client.util";
+import { APP_ADDRESS } from "../config/env.config";
+import getDefaultProfileByAddressQuery from "../graphql/get-default-profile-query.graphql";
+
+/**
+ * Get the handle.
+ *
+ * @param req - The request object.
+ * @param res - The response object.
+ * @param _next - The next function.
+ * @returns The handle object.
+ */
+export const getHandle = async (
+  req: Request,
+  res: Response,
+  _next: NextFunction
+) => {
+  const response = await baseClientUtil
+    .query(getDefaultProfileByAddressQuery, { address: APP_ADDRESS })
+    .toPromise();
+
+  res.status(200).json({
+    handle: response.data?.defaultProfile?.handle
+  });
+};
+```
+
+3. Run `npm run codegen`
+
+Here `response` variable will contain all types that are there in a query with complete type safety
+
+### Note
+You might not get intellisense in some scenario like when UINION like `MediaSet` are used
+
+Like `response.data?.defaultProfile?.picture?.original?.url` IDE will throw error
+``` text
+TS2339: Propert original does not exist on type
+{   __typename?: "MediaSet" | undefined;   original: {     __typename?: "Media" | undefined;     url: any;   }; } | {   __typename?: "NftImage" | undefined; }
+Property  original  does not exist on type  { __typename?: "NftImage" | undefined; }
+```
+
+To resolve this, you can write this in two way 
+1. Long way
+```typescript
+if (response.data?.defaultProfile?.picture) {
+    if (response.data.defaultProfile.picture.__typename === 'MediaSet') {
+    url = response.data.defaultProfile.picture.original?.url;
+} else if (response.data.defaultProfile.picture.__typename === 'NftImage') {
+// Handle NftImage accordingly
+}
+}
+```
+2. Short way
+```typescript
+(
+    response.data?.defaultProfile?.picture as {
+      __typename: "MediaSet";
+      original: { url: string };
+    }
+  )?.original?.url;
+```
+ChatGPT's solution thread: https://chat.openai.com/share/2ca275d8-20d7-469d-a335-4fd779b87c30
+
+### Step-4
+
+Add `src/gql` folder in `.gitignore` & `.eslintignore` as these are dev dependencies and can
+be generated during development
 </details>
 
 ## Things to trigger before coding anytime

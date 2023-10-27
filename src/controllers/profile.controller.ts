@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import baseClientUtil from "../utils/lens-protocol/base-client.util";
 import { APP_ADDRESS } from "../config/env.config";
-import getDefaultProfileByAddressDocument from "../graphql/get-default-profile.graphql";
+import getDefaultProfileByAddressQuery from "../graphql/get-default-profile-query.graphql";
 
 /**
  * Get the handle.
@@ -17,7 +17,7 @@ export const getHandle = async (
   _next: NextFunction
 ) => {
   const response = await baseClientUtil
-    .query(getDefaultProfileByAddressDocument, { address: APP_ADDRESS })
+    .query(getDefaultProfileByAddressQuery, { address: APP_ADDRESS })
     .toPromise();
 
   /** Since MediaSet is union, so we have to check the type */
@@ -27,8 +27,9 @@ export const getHandle = async (
       original: { url: string };
     }
   )?.original?.url;
+  console.log("URL : " + url);
 
   res.status(200).json({
-    handle: url
+    handle: response.data?.defaultProfile?.handle
   });
 };

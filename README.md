@@ -5,7 +5,8 @@ for fetching/mutating data on Lens Protocol, also setup your own REST API using 
 
 ## Prerequisites
 
-First setup basic typescript nodejs application using [basic-ts-express-app](https://github.com/anjaysahoo/basic-ts-express-app) repo
+First setup basic typescript nodejs application
+using [basic-ts-express-app](https://github.com/anjaysahoo/basic-ts-express-app) repo
 
 ## Things that will be covered in this guide are
 
@@ -22,11 +23,13 @@ In this simple example, we will fetch handle for hardcoded app address from Lens
 
 ### Step-1:
 
-Creating a`Base Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of fetching related stuff from Lens Protocol.
+Creating a`Base Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of
+fetching related stuff from Lens Protocol.
 
 Under `utils/lens-protocol` folder create a `base-client.ts` file
 
-<b>Note: </b> Rationale behind using `URQL` client can be understood from this article [5 GraphQL clients for JavaScript and Node.js](https://blog.logrocket.com/5-graphql-clients-for-javascript-and-node-js/#:~:text=GraphQL-based%20servers%20can%20only,a%20GraphQL%20client%20is%20needed.)
+<b>Note: </b> Rationale behind using `URQL` client can be understood from this
+article [5 GraphQL clients for JavaScript and Node.js](https://blog.logrocket.com/5-graphql-clients-for-javascript-and-node-js/#:~:text=GraphQL-based%20servers%20can%20only,a%20GraphQL%20client%20is%20needed.)
 
 ### Step-2
 
@@ -172,7 +175,8 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
 
 Husky to prevent bad git commits and enforce code standards in your project.
 
-To understand more about husky, refer to this article 👉 [Enforcing Coding Conventions with Husky Pre-commit Hooks](https://khalilstemmler.com/blogs/tooling/enforcing-husky-precommit-hooks/)
+To understand more about husky, refer to this article
+👉 [Enforcing Coding Conventions with Husky Pre-commit Hooks](https://khalilstemmler.com/blogs/tooling/enforcing-husky-precommit-hooks/)
 
 <b>Note: </b>Above article setup is old so follow below steps to set up husky
 
@@ -204,7 +208,8 @@ Referred resources
 1. If any file contains prettier then those will be fixed, and **you need to commit that fixed code again**.
 2. Issue related to linting will be reported, and **you need fix then only you can commit the code**
 
-**Note:** For setting up Husky for project where are there are app/projects in sub-folders, follow this [StackOverflow thread](https://stackoverflow.com/questions/74129312/how-to-configure-husky-when-git-is-in-a-different-folder)
+**Note:** For setting up Husky for project where are there are app/projects in sub-folders, follow
+this [StackOverflow thread](https://stackoverflow.com/questions/74129312/how-to-configure-husky-when-git-is-in-a-different-folder)
 
 </details>
 
@@ -229,13 +234,16 @@ This help reduce code duplication.
 
 ```typescript
 import dotenv from "dotenv";
+
 dotenv.config();
 
 export const APP_ADDRESS = process.env.APP_ADDRESS as string;
 export const PRIVATE_KEY = process.env.PRIVATE_KEY as string;
 ```
 
-Refer this article 👉 [Node.js Everywhere with Environment Variables!](https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786) for better understanding
+Refer this article
+👉 [Node.js Everywhere with Environment Variables!](https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786)
+for better understanding
 
 </details>
 
@@ -247,7 +255,8 @@ Lens Protocol GraphQL API
 
 ### Step-1:
 
-Create a `Authenticated Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of mutation-related stuff from Lens Protocol.
+Create a `Authenticated Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of
+mutation-related stuff from Lens Protocol.
 
 Under `utils/lens-protocol` folder create a `authenticated-client.util.ts` file.
 
@@ -368,6 +377,7 @@ Create models & utility function as per the requirement.
 1. [ChatGPT Thread](https://chat.openai.com/share/6d227e08-d64c-43d8-8289-7016dd7f0bab) on API structuring.
 2. ![Design Effective & Safe API.jpeg](src/public/readme-assets/Design%20Effective%20%26%20Safe%20API.jpeg)
 3. ![HTTP Status Code.jpeg](src/public/readme-assets/HTTP%20Status%20Code.jpeg)
+
 </details>
 
 <details>
@@ -379,7 +389,8 @@ Create models & utility function as per the requirement.
 1. `npm i graphql`
 2. `npm i -D typescript @graphql-codegen/cli`
 3. `npm i -D @parcel/watcher` to watch your code changes and codegen automatically
-4. `npm i`
+4. Add script `"codegen": "graphql-codegen --watch"` to `package.json`
+5. `npm i`
 
 ### Step-2
 

@@ -526,3 +526,4 @@ be generated during development
 ## Improvements(TODO)
 
 1. Add more customizable rules in `.eslintrc` & `.prettierrc`
+2. Remove errors from `src/graphql/get-default-profile-query.graphql.ts` file

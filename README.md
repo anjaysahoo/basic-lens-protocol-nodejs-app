@@ -382,7 +382,9 @@ Create models & utility function as per the requirement.
 4. `npm i`
 
 ### Step-2
+
 `codegen.ts` file
+
 ```typescript
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
@@ -391,7 +393,8 @@ const config: CodegenConfig = {
   documents: ["src/graphql/*.ts"], //from where to pick queries & mutations
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
-    "./src/gql/": { //where to put generated code
+    "./src/gql/": {
+      //where to put generated code
       preset: "client",
       plugins: []
     }
@@ -402,9 +405,11 @@ export default config;
 ```
 
 ### Step-3
+
 Below is an example on how to use codegen
 
 1. In `src/graphql/get-default-profile-query.graphql.ts` file
+
 ```typescript
 import { graphql } from "../gql";
 
@@ -432,6 +437,7 @@ export default getDefaultProfileByAddressQuery;
 ```
 
 2. In `src/controllers/profile.controller.ts` file
+
 ```typescript
 import { Request, Response, NextFunction } from "express";
 import baseClientUtil from "../utils/lens-protocol/base-client.util";
@@ -466,41 +472,49 @@ export const getHandle = async (
 Here `response` variable will contain all types that are there in a query with complete type safety
 
 ### Note
+
 You might not get intellisense in some scenario like when UINION like `MediaSet` are used
 
 Like `response.data?.defaultProfile?.picture?.original?.url` IDE will throw error
-``` text
+
+```text
 TS2339: Propert original does not exist on type
 {   __typename?: "MediaSet" | undefined;   original: {     __typename?: "Media" | undefined;     url: any;   }; } | {   __typename?: "NftImage" | undefined; }
 Property  original  does not exist on type  { __typename?: "NftImage" | undefined; }
 ```
 
-To resolve this, you can write this in two way 
+To resolve this, you can write this in two way
+
 1. Long way
+
 ```typescript
 if (response.data?.defaultProfile?.picture) {
-    if (response.data.defaultProfile.picture.__typename === 'MediaSet') {
+  if (response.data.defaultProfile.picture.__typename === "MediaSet") {
     url = response.data.defaultProfile.picture.original?.url;
-} else if (response.data.defaultProfile.picture.__typename === 'NftImage') {
-// Handle NftImage accordingly
-}
+  } else if (response.data.defaultProfile.picture.__typename === "NftImage") {
+    // Handle NftImage accordingly
+  }
 }
 ```
+
 2. Short way
+
 ```typescript
 (
-    response.data?.defaultProfile?.picture as {
-      __typename: "MediaSet";
-      original: { url: string };
-    }
-  )?.original?.url;
+  response.data?.defaultProfile?.picture as {
+    __typename: "MediaSet";
+    original: { url: string };
+  }
+)?.original?.url;
 ```
+
 ChatGPT's solution thread: https://chat.openai.com/share/2ca275d8-20d7-469d-a335-4fd779b87c30
 
 ### Step-4
 
 Add `src/gql` folder in `.gitignore` & `.eslintignore` as these are dev dependencies and can
 be generated during development
+
 </details>
 
 ## Things to trigger before coding anytime

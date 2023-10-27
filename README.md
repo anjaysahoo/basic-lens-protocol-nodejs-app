@@ -526,7 +526,6 @@ if (response.data?.defaultProfile?.picture) {
 
 ChatGPT's solution thread: https://chat.openai.com/share/2ca275d8-20d7-469d-a335-4fd779b87c30
 
-
 </details>
 
 ## Things to trigger before coding anytime

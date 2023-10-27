@@ -394,6 +394,11 @@ Create models & utility function as per the requirement.
 
 ### Step-2
 
+Add `src/gql` folder in `.gitignore` & `.eslintignore` as these are dev dependencies and can
+be generated during development
+
+### Step-3
+
 `codegen.ts` file
 
 ```typescript
@@ -415,7 +420,7 @@ const config: CodegenConfig = {
 export default config;
 ```
 
-### Step-3
+### Step-4
 
 Below is an example on how to use codegen
 
@@ -521,10 +526,6 @@ if (response.data?.defaultProfile?.picture) {
 
 ChatGPT's solution thread: https://chat.openai.com/share/2ca275d8-20d7-469d-a335-4fd779b87c30
 
-### Step-4
-
-Add `src/gql` folder in `.gitignore` & `.eslintignore` as these are dev dependencies and can
-be generated during development
 
 </details>
 

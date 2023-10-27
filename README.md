@@ -388,9 +388,10 @@ Create models & utility function as per the requirement.
 
 1. `npm i graphql`
 2. `npm i -D typescript @graphql-codegen/cli`
-3. `npm i -D @parcel/watcher` to watch your code changes and codegen automatically
-4. Add script `"codegen": "graphql-codegen --watch"` to `package.json`
-5. `npm i`
+3. `npm i @graphql-codegen/client-preset`
+4. `npm i -D @parcel/watcher` to watch your code changes and codegen automatically
+5. Add script `"codegen": "graphql-codegen --watch"` to `package.json`
+6. `npm i`
 
 ### Step-2
 
@@ -525,7 +526,6 @@ if (response.data?.defaultProfile?.picture) {
 ```
 
 ChatGPT's solution thread: https://chat.openai.com/share/2ca275d8-20d7-469d-a335-4fd779b87c30
-
 
 </details>
 

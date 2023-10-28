@@ -423,7 +423,7 @@ This will also resolve typescript issue that might happen in file under `src/gra
 
 ```typescript
 const config: CodegenConfig = {
-  schema: "schema.graphql",
+  schema: "schema.graphql"
 };
 
 export default config;

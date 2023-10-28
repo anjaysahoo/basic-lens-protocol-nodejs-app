@@ -393,7 +393,6 @@ Create models & utility function as per the requirement.
 5. Add script `"codegen": "graphql-codegen --watch"` to `package.json`
 6. `npm i`
 
-
 ### Step-2
 
 `codegen.ts` file

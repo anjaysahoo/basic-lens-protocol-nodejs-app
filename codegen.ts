@@ -1,7 +1,8 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  schema: "https://api-mumbai.lens.dev/",
+  //TODO: Use API in place of hardcoded schema file, also resolve query issue when start using API
+  schema: "schema.graphql",
   documents: ["src/graphql/*.ts"],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {

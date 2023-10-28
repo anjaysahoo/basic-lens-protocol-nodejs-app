@@ -395,11 +395,6 @@ Create models & utility function as per the requirement.
 
 ### Step-2
 
-Add `src/gql` folder in `.gitignore` & `.eslintignore` as these are dev dependencies and can
-be generated during development
-
-### Step-3
-
 `codegen.ts` file
 
 ```typescript
@@ -420,6 +415,26 @@ const config: CodegenConfig = {
 
 export default config;
 ```
+
+**Alternatively**
+
+We can place directly place `schema.grapgql` after downloading from https://api-mumbai.lens.dev/,
+if there is any issue with url call.
+
+This will also resolve typescript issue that might happen in file under `src/graphql`
+
+```typescript
+const config: CodegenConfig = {
+  schema: "schema.graphql"
+};
+
+export default config;
+```
+
+### Step-3
+
+Add `src/gql` folder in `.gitignore` & `.eslintignore` as these are dev dependencies and can
+be generated during development
 
 ### Step-4
 
@@ -538,4 +553,4 @@ ChatGPT's solution thread: https://chat.openai.com/share/2ca275d8-20d7-469d-a335
 ## Improvements(TODO)
 
 1. Add more customizable rules in `.eslintrc` & `.prettierrc`
-2. Remove errors from `src/graphql/get-default-profile-query.graphql.ts` file
+2. Work on using schema url instead of downloaded schema file

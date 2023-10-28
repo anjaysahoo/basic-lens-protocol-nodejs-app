@@ -5,7 +5,8 @@ for fetching/mutating data on Lens Protocol, also setup your own REST API using 
 
 ## Prerequisites
 
-First setup basic typescript nodejs application using [basic-ts-express-app](https://github.com/anjaysahoo/basic-ts-express-app) repo
+First setup basic typescript nodejs application
+using [basic-ts-express-app](https://github.com/anjaysahoo/basic-ts-express-app) repo
 
 ## Things that will be covered in this guide are
 
@@ -13,6 +14,7 @@ First setup basic typescript nodejs application using [basic-ts-express-app](htt
 2. **Setting up Prettier with ESLint**
 3. **Setting up Husky**
 4. Creating a **simple POST/DELETE REST API** for mutating data from Lens Protocol
+5. Setting Up Codegen for Lens GraphQL
 
 <details>
  <summary style="font-size: x-large; font-weight: bold">Simple GET REST API</summary>
@@ -21,11 +23,13 @@ In this simple example, we will fetch handle for hardcoded app address from Lens
 
 ### Step-1:
 
-Creating a`Base Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of fetching related stuff from Lens Protocol.
+Creating a`Base Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of
+fetching related stuff from Lens Protocol.
 
 Under `utils/lens-protocol` folder create a `base-client.ts` file
 
-<b>Note: </b> Rationale behind using `URQL` client can be understood from this article [5 GraphQL clients for JavaScript and Node.js](https://blog.logrocket.com/5-graphql-clients-for-javascript-and-node-js/#:~:text=GraphQL-based%20servers%20can%20only,a%20GraphQL%20client%20is%20needed.)
+<b>Note: </b> Rationale behind using `URQL` client can be understood from this
+article [5 GraphQL clients for JavaScript and Node.js](https://blog.logrocket.com/5-graphql-clients-for-javascript-and-node-js/#:~:text=GraphQL-based%20servers%20can%20only,a%20GraphQL%20client%20is%20needed.)
 
 ### Step-2
 
@@ -171,7 +175,8 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
 
 Husky to prevent bad git commits and enforce code standards in your project.
 
-To understand more about husky, refer to this article 👉 [Enforcing Coding Conventions with Husky Pre-commit Hooks](https://khalilstemmler.com/blogs/tooling/enforcing-husky-precommit-hooks/)
+To understand more about husky, refer to this article
+👉 [Enforcing Coding Conventions with Husky Pre-commit Hooks](https://khalilstemmler.com/blogs/tooling/enforcing-husky-precommit-hooks/)
 
 <b>Note: </b>Above article setup is old so follow below steps to set up husky
 
@@ -203,6 +208,9 @@ Referred resources
 1. If any file contains prettier then those will be fixed, and **you need to commit that fixed code again**.
 2. Issue related to linting will be reported, and **you need fix then only you can commit the code**
 
+**Note:** For setting up Husky for project where are there are app/projects in sub-folders, follow
+this [StackOverflow thread](https://stackoverflow.com/questions/74129312/how-to-configure-husky-when-git-is-in-a-different-folder)
+
 </details>
 
 <details>
@@ -226,13 +234,16 @@ This help reduce code duplication.
 
 ```typescript
 import dotenv from "dotenv";
+
 dotenv.config();
 
 export const APP_ADDRESS = process.env.APP_ADDRESS as string;
 export const PRIVATE_KEY = process.env.PRIVATE_KEY as string;
 ```
 
-Refer this article 👉 [Node.js Everywhere with Environment Variables!](https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786) for better understanding
+Refer this article
+👉 [Node.js Everywhere with Environment Variables!](https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786)
+for better understanding
 
 </details>
 
@@ -244,7 +255,8 @@ Lens Protocol GraphQL API
 
 ### Step-1:
 
-Create a `Authenticated Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of mutation-related stuff from Lens Protocol.
+Create a `Authenticated Client` using [URQL](https://formidable.com/open-source/urql/docs/basics/core/) for all sorts of
+mutation-related stuff from Lens Protocol.
 
 Under `utils/lens-protocol` folder create a `authenticated-client.util.ts` file.
 
@@ -365,6 +377,171 @@ Create models & utility function as per the requirement.
 1. [ChatGPT Thread](https://chat.openai.com/share/6d227e08-d64c-43d8-8289-7016dd7f0bab) on API structuring.
 2. ![Design Effective & Safe API.jpeg](src/public/readme-assets/Design%20Effective%20%26%20Safe%20API.jpeg)
 3. ![HTTP Status Code.jpeg](src/public/readme-assets/HTTP%20Status%20Code.jpeg)
+
+</details>
+
+<details>
+ <summary style="font-size: x-large; font-weight: bold">Setting Up Codegen for Lens GraphQL</summary>
+ Using codegen we will be able to make Lens Graphql responses type safe.
+
+### Step-1
+
+1. `npm i graphql`
+2. `npm i -D typescript @graphql-codegen/cli`
+3. `npm i @graphql-codegen/client-preset`
+4. `npm i -D @parcel/watcher` to watch your code changes and codegen automatically
+5. Add script `"codegen": "graphql-codegen --watch"` to `package.json`
+6. `npm i`
+
+### Step-2
+
+`codegen.ts` file
+
+```typescript
+import type { CodegenConfig } from "@graphql-codegen/cli";
+
+const config: CodegenConfig = {
+  schema: "https://api-mumbai.lens.dev/",
+  documents: ["src/graphql/*.ts"], //from where to pick queries & mutations
+  ignoreNoDocuments: true, // for better experience with the watcher
+  generates: {
+    "./src/gql/": {
+      //where to put generated code
+      preset: "client",
+      plugins: []
+    }
+  }
+};
+
+export default config;
+```
+
+**Alternatively**
+
+We can place directly place `schema.grapgql` after downloading from https://api-mumbai.lens.dev/,
+if there is any issue with url call.
+
+This will also resolve typescript issue that might happen in file under `src/graphql`
+
+```typescript
+const config: CodegenConfig = {
+  schema: "schema.graphql"
+};
+
+export default config;
+```
+
+### Step-3
+
+Add `src/gql` folder in `.gitignore` & `.eslintignore` as these are dev dependencies and can
+be generated during development
+
+### Step-4
+
+Below is an example on how to use codegen
+
+1. In `src/graphql/get-default-profile-query.graphql.ts` file
+
+```typescript
+import { graphql } from "../gql";
+
+const getDefaultProfileByAddressQuery = graphql(/* GraphQL */ `
+  query defaultProfile($address: EthereumAddress!) {
+    defaultProfile(request: { ethereumAddress: $address }) {
+      id
+      name
+      isDefault
+      metadata
+      handle
+      picture {
+        ... on MediaSet {
+          original {
+            url
+          }
+        }
+      }
+      ownedBy
+    }
+  }
+`);
+
+export default getDefaultProfileByAddressQuery;
+```
+
+2. In `src/controllers/profile.controller.ts` file
+
+```typescript
+import { Request, Response, NextFunction } from "express";
+import baseClientUtil from "../utils/lens-protocol/base-client.util";
+import { APP_ADDRESS } from "../config/env.config";
+import getDefaultProfileByAddressQuery from "../graphql/get-default-profile-query.graphql";
+
+/**
+ * Get the handle.
+ *
+ * @param req - The request object.
+ * @param res - The response object.
+ * @param _next - The next function.
+ * @returns The handle object.
+ */
+export const getHandle = async (
+  req: Request,
+  res: Response,
+  _next: NextFunction
+) => {
+  const response = await baseClientUtil
+    .query(getDefaultProfileByAddressQuery, { address: APP_ADDRESS })
+    .toPromise();
+
+  res.status(200).json({
+    handle: response.data?.defaultProfile?.handle
+  });
+};
+```
+
+3. Run `npm run codegen`
+
+Here `response` variable will contain all types that are there in a query with complete type safety
+
+### Note
+
+You might not get intellisense in some scenario like when UINION like `MediaSet` are used
+
+Like `response.data?.defaultProfile?.picture?.original?.url` IDE will throw error
+
+```text
+TS2339: Propert original does not exist on type
+{   __typename?: "MediaSet" | undefined;   original: {     __typename?: "Media" | undefined;     url: any;   }; } | {   __typename?: "NftImage" | undefined; }
+Property  original  does not exist on type  { __typename?: "NftImage" | undefined; }
+```
+
+To resolve this, you can write this in two way
+
+1. Long way
+
+```typescript
+if (response.data?.defaultProfile?.picture) {
+  if (response.data.defaultProfile.picture.__typename === "MediaSet") {
+    url = response.data.defaultProfile.picture.original?.url;
+  } else if (response.data.defaultProfile.picture.__typename === "NftImage") {
+    // Handle NftImage accordingly
+  }
+}
+```
+
+2. Short way
+
+```typescript
+(
+  response.data?.defaultProfile?.picture as {
+    __typename: "MediaSet";
+    original: { url: string };
+  }
+)?.original?.url;
+```
+
+ChatGPT's solution thread: https://chat.openai.com/share/2ca275d8-20d7-469d-a335-4fd779b87c30
+
 </details>
 
 ## Things to trigger before coding anytime
@@ -376,3 +553,4 @@ Create models & utility function as per the requirement.
 ## Improvements(TODO)
 
 1. Add more customizable rules in `.eslintrc` & `.prettierrc`
+2. Work on using schema url instead of downloaded schema file
